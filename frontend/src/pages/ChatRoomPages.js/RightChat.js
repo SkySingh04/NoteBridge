@@ -16,7 +16,7 @@ function RightChat() {
               <div className='text-2xl'><SlOptionsVertical /></div>
             </div>
         </div>
-        <div className='flex-1 bg-richblack-700'>
+        <div className='flex-1 bg-richblack-900'>
             <ChatRightMessage />
         </div>
         <div className='bg-pure-greys-25 p-2'>

@@ -2,6 +2,7 @@ import React from 'react';
 import signupImg from '../Images/signup.webp';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { toast } from 'react-hot-toast';
 
 function Signup() {
     const [signupForm,setSignupForm]=useState({
@@ -27,7 +28,8 @@ function Signup() {
             'password':"",
             'confirmPassword':""
         });
-        setAccountType(true)
+        setAccountType(true);
+        toast.success('Signup Successfull');
     }
     function handleAccountType(event){
         console.log(event.target.value);
@@ -76,7 +78,9 @@ function Signup() {
                     </div>
                 </div>
             </div>
-            <div onClick={submitForm} className='bg-yellow-50 my-2 text-black rounded-md text-2xl text-center h-12 flex justify-center items-center mx-4'>Create Account</div>
+            <Link to='/chatroom'>
+                <div onClick={submitForm} className='bg-yellow-50 my-2 text-black rounded-md text-2xl text-center h-12 flex justify-center items-center mx-4'>Create Account</div>
+            </Link>
         </div>
         <div className='flex justify-center items-center flex-[0.5]'>
             <img  className='h-96' src={signupImg} alt="" />
