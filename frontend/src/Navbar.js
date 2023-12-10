@@ -15,7 +15,9 @@ function Navbar() {
 
   return (
     <div className=' bg-[#161D29] text-richblack-200 flex w-[1080px] mx-auto justify-between py-3 px-5'>
-        <div className='text-4xl font-bold'>NoteBridge</div>
+        <Link to={'/'}>
+            <div className='text-4xl font-bold'>NoteBridge</div>
+        </Link>
         <div className='flex justify-between gap-6'>
             {btn=='signup' ? (
                 <Link to='/signup'>
