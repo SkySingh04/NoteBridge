@@ -6,7 +6,7 @@ function LandingPage() {
   return (
     <div className='flex bg-richblack-900 text-richblack-100 h-[90vh]'>
         <div className='flex-[0.5] flex flex-col justify-center items-center p-10 gap-10'>
-            <p className='text-5xlcd font-extrabold text-white'>Empower Learning with NoteBridge
+            <p className='text-5xl font-extrabold text-white'>Empower Learning with NoteBridge
             <div className='w-full mt-8'>
                 <div className='h-1 w-20 bg-white'></div>
             </div></p>
