@@ -16,7 +16,7 @@ public class DatabaseConfig{
 		String command=comm;
 		String url = "jdbc:mysql://localhost:3306/Notessharing";
 	    String user = "root";
-	    String pwd = "hariambika";
+	    String pwd = "";
 	    
 		try (
 	            // Establish a connection to the database server
@@ -38,7 +38,7 @@ public class DatabaseConfig{
 	static void database(){
 		String url = "jdbc:mysql://localhost:3306/";
 	    String user = "root";
-	    String pwd = "hariambika";
+	    String pwd = "";
 	    String dbName ="Notessharing";
 	    String command = "CREATE DATABASE IF NOT EXISTS " + dbName;
 		try (
