@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import com.notebridge.backend.database.DatabaseConfig;
 import com.notebridge.backend.modal.User;
 
 @Service
@@ -29,9 +30,19 @@ public class UserServiceImpl implements UserService {
         System.out.println("FirstName: " + user.getFirstName());
         System.out.println("LastName: " + user.getLastName());
         System.out.println("Role: " + user.getRole());
-        
+        	List<String> variableList= new ArrayList<>();
+        	variableList.add(user.getFirstName());
+        	variableList.add(user.getLastName());
+        	variableList.add(user.getEmail());
+        	variableList.add(user.getPassword());
+        	variableList.add(user.getRole());
+        	
+        	DatabaseConfig obj= new DatabaseConfig();
+        	obj.getdata(variableList);
+        	
+        }
     	
-    }
+  
     
 
     @Override
