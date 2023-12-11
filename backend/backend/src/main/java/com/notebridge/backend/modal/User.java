@@ -1,4 +1,7 @@
-package com.notebridge.backend.modal; 
+package com.notebridge.backend.modal;
+import java.util.ArrayList;
+import java.util.List;
+
 public class User {
     private String firstName;
     private String lastName;
@@ -59,4 +62,8 @@ public class User {
     public void setRole(String role) {
         this.role = role;
     }
+    
+    
 }
+
+
