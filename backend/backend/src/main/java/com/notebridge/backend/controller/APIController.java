@@ -13,35 +13,52 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.notebridge.backend.modal.User;
 import com.notebridge.backend.service.UserService; 
-  
+import org.springframework.web.bind.annotation.*;
+
 //import com.example.demo.modal.Book; 
 //  
 //import com.example.demo.service.BookServiceImpl; 
   
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+
 @RestController
-public class APIController { 
-  
-	@Autowired
-    private UserService userService; // Inject UserService
+public class APIController {
+
+    @Autowired
+    private UserService userService;
 
     // Other mappings...
 
     @PostMapping("/signup")
-    public void signUp(@RequestBody User user) {
+    @CrossOrigin(origins = "http://localhost:3000")
+    public ResponseEntity<String> signUp(@RequestBody User user) {
         // Implement logic to register a new user
-        userService.signUp(user);
+        boolean isSignUpSuccessful = userService.signUp(user);
+
+        if (isSignUpSuccessful) {
+            return ResponseEntity.status(HttpStatus.CREATED).body("User signed up successfully");
+        } else {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Failed to sign up user");
+        }
     }
 
     @PostMapping("/signin")
-    public void signIn(@RequestBody User user) {
+    public ResponseEntity<String> signIn(@RequestBody User user) {
         // Implement logic to authenticate the user
-        userService.signIn(user);
+        boolean isSignInSuccessful = userService.signIn(user);
+
+        if (isSignInSuccessful) {
+            return ResponseEntity.ok("User signed in successfully");
+        } else {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Authentication failed");
+        }
     }
-    
-	@GetMapping("/")
-	public String  hello() {
-		return "Hello World";
-	}
+
+    // Other methods...
+
+}
+
 	
 	
 	
@@ -69,4 +86,3 @@ public class APIController {
 //    } 
 	
   
-}

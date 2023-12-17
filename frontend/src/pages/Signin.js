@@ -5,35 +5,62 @@ import { useState } from 'react';
 import { toast } from 'react-hot-toast';
 
 function Signin() {
-    const [signinForm,setSigninForm]=useState({
-        'accountType': "Student",
+    const [signinForm, setSigninForm] = useState({
+        'role': "Student",
         'email':"",
         'password':""
     });
-    const [accountType,setAccountType]=useState(true);
+    const [role, setRole] = useState(true);
+
     function handleChange(event){
         setSigninForm({...signinForm,[event.target.name]:event.target.value});
     }
-    function submitForm() {  
-        console.log('final form submitted');
-        console.log(signinForm);
-        setSigninForm({
-            'accountType': "Student",
-            'email':"",
-            'password':""
-        });
-        setAccountType(true);
-        toast.success('Logged in Successfull');
-    }
-    function handleAccountType(event){
-        console.log(event.target.value);
-        if(event.target.value=='Student'){
-            setAccountType(true);
-            setSigninForm({...signinForm,'accountType':'Student'});
-        }else{
-            setAccountType(false);
-            setSigninForm({...signinForm,'accountType':'Teacher'});
+
+    function handleRole(event){
+        if(event.target.value === 'Student'){
+            setRole(true);
+            setSigninForm({...signinForm, 'role':'Student'});
+        } else {
+            setRole(false);
+            setSigninForm({...signinForm, 'role':'Teacher'});
         }
+    }
+
+    async function submitForm() {
+        try {
+            const response = await postData('http://localhost:8080/signin', signinForm);
+
+            console.log('final form submitted');
+            console.log(signinForm);
+
+            if (response.success) {
+                toast.success('Logged in Successfully');
+                // Navigate to the next page upon successful login
+                // Replace '/chatroom' with your intended route
+                // history.push('/chatroom');
+            } else {
+                toast.error('Login failed');
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            toast.error('Error during login');
+        }
+    }
+
+    async function postData(url = '', data = {}) {
+        const response = await fetch(url, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(data),
+        });
+
+        if (!response.ok) {
+            throw new Error('Network response was not ok.');
+        }
+
+        return response.json();
     }
   return (
     <div className='bg-black mx-auto felx flex'>
@@ -42,8 +69,8 @@ function Signin() {
             <div className='text-richblack-300 mx-4'>"Unlock the power of collaboration with our note-sharing platform – where ideas converge and knowledge transcends boundaries."</div>
             <div className='flex flex-col items-start gap-4'>
                 <div className='flex bg-richblack-700 w-fit mx-4 text-lg text-white  rounded-lg p-1'>
-                <button name='accountType' onMouseOver={handleAccountType} value='Student' className={` ${accountType ? 'bg-black':''} p-1 px-3 text-white font-bold flex justify-between items-center rounded-lg`}>Student</button>
-                    <button name='accountType' onMouseOver={handleAccountType} value='Teacher' className={` ${!accountType ? 'bg-black':''}  p-1 px-3 flex justify-between items-center font-bold  rounded-lg`}>Teacher</button>
+                <button name='role' onMouseOver={handleRole} value='Student' className={` ${role ? 'bg-black':''} p-1 px-3 text-white font-bold flex justify-between items-center rounded-lg`}>Student</button>
+                    <button name='role' onMouseOver={handleRole} value='Teacher' className={` ${!role ? 'bg-black':''}  p-1 px-3 flex justify-between items-center font-bold  rounded-lg`}>Teacher</button>
                 </div>
                 <div className='w-full px-4 text-lg text-richblack-50 flex flex-col gap-3'>
                     <div className='flex flex-col'>

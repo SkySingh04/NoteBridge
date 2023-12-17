@@ -15,32 +15,41 @@ public class UserServiceImpl implements UserService {
     // @Autowired
     // private UserRepository userRepository;
 
-    // For the example, let's use a simple in-memory list to manage users
-    private List<User> users = new ArrayList<>();
 
-    @Override
-    public void signUp(User user) {
-        // Implement logic to save the user to the database or in-memory list
-//        users.add(user); Uncomment this
-        // userRepository.save(user); // If using a repository
-    //For testing
-    	System.out.println("Received user data for signUp:");
-        System.out.println("Email: " + user.getEmail());
-        System.out.println("Password: " + user.getPassword());
-        System.out.println("FirstName: " + user.getFirstName());
-        System.out.println("LastName: " + user.getLastName());
-        System.out.println("Role: " + user.getRole());
-        	List<String> variableList= new ArrayList<>();
-        	variableList.add(user.getFirstName());
-        	variableList.add(user.getLastName());
-        	variableList.add(user.getEmail());
-        	variableList.add(user.getPassword());
-        	variableList.add(user.getRole());
-        	
-        	DatabaseConfig obj= new DatabaseConfig();
-        	obj.getdata(variableList);
-        	
-        }
+	 @Override
+	    public boolean signUp(User user) {
+	        // Simulating a database operation
+	        try {
+	            // Perform your database insertion logic here
+	            // For example:
+	            // userRepository.save(user);
+	            // If there's an issue while adding to the database, throw an exception or return false
+	            // throw new SomeDatabaseException("Failed to add user to the database");
+
+	            // For testing, return false if there's an issue
+	            System.out.println("Received user data for signUp:");
+	            System.out.println("Email: " + user.getEmail());
+	            System.out.println("Password: " + user.getPassword());
+	            System.out.println("FirstName: " + user.getFirstName());
+	            System.out.println("LastName: " + user.getLastName());
+	            System.out.println("Role: " + user.getRole());
+
+	            List<String> variableList = new ArrayList<>();
+	            variableList.add(user.getFirstName());
+	            variableList.add(user.getLastName());
+	            variableList.add(user.getEmail());
+	            variableList.add(user.getPassword());
+	            variableList.add(user.getRole());
+
+	            DatabaseConfig obj = new DatabaseConfig();
+	            boolean success = obj.getdata(variableList);
+	            System.out.println(success);
+	            return success; // Return the success status based on database operation
+	        } catch (Exception e) {
+	            e.printStackTrace();
+	            return false; // Return false if an exception occurs during database operation
+	        }
+	    }
     	
   
     
