@@ -116,7 +116,7 @@ function Signup() {
     }
   }
   return (
-    <div className="bg-black mx-auto felx flex">
+    <div className="bg-richblack-900 mx-auto felx flex">
       <div className="text-white flex flex-col my-10  gap-2 pb-3 px-2 flex-[0.5]">
         <div className="text-richblack-25 text-4xl mx-4">
           Join the Community: Create Your Account for Seamless Note Sharing!
@@ -132,7 +132,7 @@ function Signup() {
               onMouseOver={handlerole}
               value="Student"
               className={` ${
-                role ? "bg-black" : ""
+                role ? "bg-richblack-900" : ""
               } p-1 px-3 text-white font-bold flex justify-between items-center rounded-lg`}
             >
               Student

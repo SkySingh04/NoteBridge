@@ -8,8 +8,10 @@ import LandingPage from './pages/LandingPage';
 
 function Home() {
   return (
-    <div className=''>
-        <Navbar />
+    <div className='bg-richblack-900'>
+        <div className='bg-[#161D29]'>
+          <Navbar />
+        </div>
         <div className='w-[1080px] mx-auto'>
             <Routes>
                 <Route path="/" element={<LandingPage />}  />
