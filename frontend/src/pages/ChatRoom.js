@@ -4,7 +4,7 @@ import RightChat from './ChatRoomPages.js/RightChat';
 
 function ChatRoom() {
   return (
-    <div className='flex'>
+    <div className='flex bg-white'>
         <div className='flex-[0.4] border-2 h-[90vh] overflow-hidden'>
             <LeftChat />
         </div>

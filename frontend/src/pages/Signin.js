@@ -63,7 +63,7 @@ function Signin() {
         return response.json();
     }
   return (
-    <div className='bg-black mx-auto felx flex'>
+    <div className='bg-richblack-900 mx-auto felx flex'>
         <div className='text-white flex flex-col my-10  gap-6 flex-[0.5] p-10'>
             <div className='text-richblack-25 text-4xl mx-4'>Welcome Back</div>
             <div className='text-richblack-300 mx-4'>"Unlock the power of collaboration with our note-sharing platform – where ideas converge and knowledge transcends boundaries."</div>
