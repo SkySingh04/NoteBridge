@@ -70,7 +70,7 @@ function Signin() {
             <div className='flex flex-col items-start gap-4'>
                 <div className='flex bg-richblack-700 w-fit mx-4 text-lg text-white  rounded-lg p-1'>
                 <button name='role' onMouseOver={handleRole} value='Student' className={` ${role ? 'bg-black':''} p-1 px-3 text-white font-bold flex justify-between items-center rounded-lg`}>Student</button>
-                    <button name='role' onMouseOver={handleRole} value='Teacher' className={` ${!role ? 'bg-black':''}  p-1 px-3 flex justify-between items-center font-bold  rounded-lg`}>Teacher</button>
+                    <button name='role' onMouseOver={handleRole} value='Teacher' className={` ${!role ? 'bg-richblack-900':''}  p-1 px-3 flex justify-between items-center font-bold  rounded-lg`}>Teacher</button>
                 </div>
                 <div className='w-full px-4 text-lg text-richblack-50 flex flex-col gap-3'>
                     <div className='flex flex-col'>

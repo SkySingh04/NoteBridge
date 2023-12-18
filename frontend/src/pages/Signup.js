@@ -132,7 +132,7 @@ function Signup() {
               onMouseOver={handlerole}
               value="Student"
               className={` ${
-                role ? "bg-black" : ""
+                role ? "bg-richblack-900" : ""
               } p-1 px-3 text-white font-bold flex justify-between items-center rounded-lg`}
             >
               Student
