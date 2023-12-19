@@ -28,6 +28,7 @@ function Signin() {
 
     async function submitForm() {
         try {
+            console.log(signinForm)
             const response = await postData('http://localhost:8080/signin', signinForm);
 
             console.log('final form submitted');
@@ -48,19 +49,24 @@ function Signin() {
     }
 
     async function postData(url = '', data = {}) {
-        const response = await fetch(url, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(data),
-        });
-
-        if (!response.ok) {
-            throw new Error('Network response was not ok.');
+        try {
+            const response = await fetch(url, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(data),
+            });
+            
+            if (response.ok) {
+                return { success: true }; // Indicate success if the response is okay
+            } else {
+                return { success: false }; // Indicate failure for other cases
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            return { success: false }; // Indicate failure for network errors
         }
-
-        return response.json();
     }
   return (
     <div className='bg-richblack-900 mx-auto felx flex'>

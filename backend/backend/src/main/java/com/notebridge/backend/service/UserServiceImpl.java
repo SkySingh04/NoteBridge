@@ -60,12 +60,29 @@ public class UserServiceImpl implements UserService {
 //        return users.stream()
 //                .anyMatch(u -> u.getEmail().equals(user.getEmail()) && u.getPassword().equals(user.getPassword())); Uncomment this
         // For database-based authentication, use userRepository.findByUsernameAndPassword(user.getUsername(), user.getPassword())
-    	System.out.println("Received user data for signIn:");
-        System.out.println("Username: " + user.getEmail());
-        System.out.println("Password: " + user.getPassword());
-        System.out.println("Role: " + user.getRole());
+//    	System.out.println("Received user data for signIn:");
+//        System.out.println("Username: " + user.getEmail());
+//        System.out.println("Password: " + user.getPassword());
+//        System.out.println("Role: " + user.getRole());
+        DatabaseConfig obj = new DatabaseConfig();
+        System.out.println(user.getRole());
+        User currentUser=  obj.getUserByEmailAndPassword(user.getEmail() , user.getPassword());
         
-        return true;
+        if(currentUser!=null) {
+        	
+        	System.out.println("Received user data for signIn:");
+            System.out.println("Username: " + currentUser.getEmail());
+            System.out.println("Password: " + currentUser.getPassword());
+            System.out.println("Role: " + currentUser.getRole());
+            System.out.println("LastName:" + currentUser.getLastName());
+            System.out.println("FirstName:" + currentUser.getFirstName());
+            return true;
+        }
+        else {
+        	
+        	System.out.println("User Illah");
+        	return false;
+        }
     	
     }
 

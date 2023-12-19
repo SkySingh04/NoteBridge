@@ -44,6 +44,7 @@ public class APIController {
     }
 
     @PostMapping("/signin")
+    @CrossOrigin(origins = "http://localhost:3000")
     public ResponseEntity<String> signIn(@RequestBody User user) {
         // Implement logic to authenticate the user
         boolean isSignInSuccessful = userService.signIn(user);
