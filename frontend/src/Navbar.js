@@ -18,7 +18,8 @@ function Navbar() {
         <Link to={'/'}>
             <div className='text-4xl font-bold'>NoteBridge</div>
         </Link>
-        <div className='flex justify-between gap-6'>
+        <div className='flex justify-between gap-2'>
+            <Link to={'/info'}><button className='text-lg p-2 px-4 rounded-sm border-2'>Info</button></Link>
             {btn=='signup' ? (
                 <Link to='/signup'>
                 <button onClick={handlebtn} name={`${btn ? 'login':'signup'}`} className=' text-lg p-2 rounded-sm border-2'>SignUp</button>
