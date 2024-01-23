@@ -1,1 +1,5 @@
-writing this so that you dont fuck up
+- first get the flag to work
+-  get the latest version 
+- get the current version
+- remove the version display from every command
+- add documentation in CLI for the flag

@@ -1,5 +1,7 @@
 package com.notebridge.backend.service;
 
+
+import com.notebridge.backend.modal.Trusted_user_ip;
 import java.net.UnknownHostException;
 import java.text.SimpleDateFormat;
 
@@ -17,6 +19,8 @@ import java.util.*;
 
 @Service
 public class UserServiceImpl implements UserService {
+    private DatabaseConfig databaseConfig;
+
 
     // You might inject a UserRepository here to interact with a database
     // @Autowired
@@ -71,8 +75,12 @@ public class UserServiceImpl implements UserService {
         	variableList.add(user.getRole());
         	
         	DatabaseConfig obj= new DatabaseConfig();
+<<<<<<< HEAD
         	obj.getdata(variableList);
         return true;
+=======
+        	return obj.getdata(variableList);
+>>>>>>> 63b1553c280cf2c02e5ae4b7fd96c7f4eb04bbe1
         	
         }
     	
@@ -159,11 +167,11 @@ public class UserServiceImpl implements UserService {
    
     @Override
     public void messages(User user) {
-    	String userprof=user.getEmail();
-    	String recieverid;
-    	String message;
-    	String link;
-    	long currentTimestamp = System.currentTimeMillis();
+        String userprof = user.getEmail();
+        String recieverid ="";
+        String message ="";
+        String link = ""; // Initialize link with an empty string or the appropriate default value
+        long currentTimestamp = System.currentTimeMillis();
 
         // Create a Date object using the timestamp
         Date currentDate = new Date(currentTimestamp);
@@ -174,19 +182,36 @@ public class UserServiceImpl implements UserService {
         // Format the Date object to get the timestamp as a string
         String timestampString = dateFormat.format(currentDate);
         System.out.println(timestampString);
-    	database_messages obj3=new database_messages();
-    	obj3.create();
-    	obj3.getmessages_by_user_id(userprof);
-    	try {
-			obj3.insertvalues(userprof,recieverid,timestampString,message,link,get_ip());
-			System.out.println("Message sent successfully!!");
-		} catch (UnknownHostException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-    	
-    	
+        database_messages obj3 = new database_messages();
+        obj3.create();
+        obj3.getmessages_by_user_id(userprof);
+        try {
+            obj3.insertvalues(userprof, recieverid, timestampString, message, link, get_ip());
+            System.out.println("Message sent successfully!!");
+        } catch (UnknownHostException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
     }
+    
+    public List<Trusted_user_ip> getAllIpAddressInfo() {
+        // Implement logic to retrieve all IP address information from the database
+        // You may need to create a method in your DatabaseConfig class or repository
+        // to fetch all IP address information. The return type may vary based on your database structure.
+
+        List<Trusted_user_ip> allIpAddressInfo = databaseConfig.getAllIpAddressInfo(); // Replace with the appropriate method
+
+        // Optional: Print retrieved information for debugging
+        for (Trusted_user_ip ipAddressInfo : allIpAddressInfo) {
+            System.out.println("User Email: " + ipAddressInfo.getEmail());
+            System.out.println("Session Token: " + ipAddressInfo.getSessionToken());
+            System.out.println("IP Address: " + ipAddressInfo.getIp()); //ye wala change karna bhai
+            // Print other IP address details as needed
+        }
+
+        return allIpAddressInfo;
+    }
+
     public static void main(String args[]) {
     	User user=new User();
     	UserServiceImpl obj1=new UserServiceImpl();
