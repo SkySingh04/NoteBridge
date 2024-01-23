@@ -9,6 +9,6 @@ public interface UserService {
     boolean signUp(User user);
     boolean signIn(User user);
     void messages(User user);
-	List<Trusted_user_ip> getAllIpAddressInfo();
+	List<List<String>> getAllIpAddressInfo();
     
 }

@@ -4,7 +4,13 @@ package com.notebridge.backend.service;
 import com.notebridge.backend.modal.Trusted_user_ip;
 import java.net.UnknownHostException;
 import java.text.SimpleDateFormat;
-
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.notebridge.backend.database.DatabaseConfig;
@@ -75,12 +81,12 @@ public class UserServiceImpl implements UserService {
         	variableList.add(user.getRole());
         	
         	DatabaseConfig obj= new DatabaseConfig();
-<<<<<<< HEAD
+
         	obj.getdata(variableList);
         return true;
-=======
-        	return obj.getdata(variableList);
->>>>>>> 63b1553c280cf2c02e5ae4b7fd96c7f4eb04bbe1
+
+        	
+
         	
         }
     	
@@ -194,33 +200,60 @@ public class UserServiceImpl implements UserService {
         }
     }
     
-    public List<Trusted_user_ip> getAllIpAddressInfo() {
+    public List<List<String>> getAllIpAddressInfo() {
         // Implement logic to retrieve all IP address information from the database
         // You may need to create a method in your DatabaseConfig class or repository
         // to fetch all IP address information. The return type may vary based on your database structure.
+    	
 
-        List<Trusted_user_ip> allIpAddressInfo = databaseConfig.getAllIpAddressInfo(); // Replace with the appropriate method
+        // JDBC connection parameters
+    	List<List<String>> dataList = new ArrayList<>();
 
-        // Optional: Print retrieved information for debugging
-        for (Trusted_user_ip ipAddressInfo : allIpAddressInfo) {
-            System.out.println("User Email: " + ipAddressInfo.getEmail());
-            System.out.println("Session Token: " + ipAddressInfo.getSessionToken());
-            System.out.println("IP Address: " + ipAddressInfo.getIp()); //ye wala change karna bhai
-            // Print other IP address details as needed
+        // JDBC connection parameters
+        String url = "jdbc:mysql://localhost:3306/Notessharing";
+        String username = "root";
+        String password = "hariambika";
+
+        try (Connection connection = DriverManager.getConnection(url, username, password)) {
+            // SQL query to retrieve data (replace "your_table" with your actual table name)
+            String sql = "SELECT * FROM HISTORY";
+            try (PreparedStatement statement = connection.prepareStatement(sql);
+                 ResultSet resultSet = statement.executeQuery()) {
+
+                // Get metadata to determine the number of columns
+                int columnCount = resultSet.getMetaData().getColumnCount();
+
+                // Process the result set and add data to the list
+                while (resultSet.next()) {
+                    List<String> rowData = new ArrayList<>();
+                    for (int i = 1; i <= columnCount; i++) {
+                        String columnData = resultSet.getString(i);
+                        rowData.add(columnData);
+                    }
+                    dataList.add(rowData);
+                }
+
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
 
-        return allIpAddressInfo;
+        return dataList;
     }
 
-    public static void main(String args[]) {
-    	User user=new User();
-    	UserServiceImpl obj1=new UserServiceImpl();
-    	obj1.messages(user);
+}
     
-    }
+
+//    public static void main(String args[]) {
+//    	User user=new User();
+//    	UserServiceImpl obj1=new UserServiceImpl();
+//    	obj1.messages(user);
+    
 
 	
-}
 
 
 

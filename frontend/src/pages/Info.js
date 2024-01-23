@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+ import React, { useEffect, useState } from 'react';
 import UserLoginInfo from './UserLoginInfo';
 
 function Info() {
@@ -38,9 +38,9 @@ function Info() {
         {userLoginInfoList.map((userLoginInfo, index) => (
           <UserLoginInfo
             key={index}
-            user={userLoginInfo.user}
-            ip={userLoginInfo.ip}
-            time={userLoginInfo.time}
+            user={userLoginInfo[0]}
+            ip={userLoginInfo[1]}
+            time={userLoginInfo[2]}
           />
         ))}
       </div>

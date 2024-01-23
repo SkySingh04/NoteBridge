@@ -33,7 +33,7 @@ public class APIController {
     // Other mappings...
 
     @PostMapping("/signup")
-    @CrossOrigin(origins = "http://localhost:3001")
+    @CrossOrigin(origins = "http://localhost:3002")
     public ResponseEntity<String> signUp(@RequestBody User user) {
         // Implement logic to register a new user
         boolean isSignUpSuccessful = userService.signUp(user);
@@ -46,7 +46,7 @@ public class APIController {
     }
 
     @PostMapping("/signin")
-    @CrossOrigin(origins = "http://localhost:3001")
+    @CrossOrigin(origins = "http://localhost:3002")
     public ResponseEntity<String> signIn(@RequestBody User user) {
         // Implement logic to authenticate the user
         boolean isSignInSuccessful = userService.signIn(user);
@@ -60,12 +60,13 @@ public class APIController {
 
 
     @GetMapping("/info")
-    @CrossOrigin(origins = "http://localhost:3000")
-    public List<Trusted_user_ip> getIpAddressInfo() {
+    @CrossOrigin(origins = "http://localhost:3002")
+    public List<List<String>> getIpAddressInfo() {
         // Call the method in userService to retrieve all IP address information
-        List<Trusted_user_ip> ipAddressInfoList = userService.getAllIpAddressInfo();
+        List<List<String>> ipAddressInfoList = userService.getAllIpAddressInfo();
+        
 
-        // You can add additional logic or validation if needed
+       
 
         return ipAddressInfoList;
     }
