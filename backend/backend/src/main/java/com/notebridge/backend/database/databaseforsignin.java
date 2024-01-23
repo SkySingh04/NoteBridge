@@ -8,11 +8,17 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.io.*;
+import java.net.*;
+import java.util.*;
 
 
+import com.notebridge.backend.modal.Trusted_user_ip;
 import com.notebridge.backend.modal.User;
 
-public class DatabaseConfig{
+public class databaseforsignin{
 	
 	static boolean execution(String comm) {
 		String command=comm;
@@ -62,56 +68,32 @@ public class DatabaseConfig{
 	    
 	     
 	}
-	static void create() {
+	public static void create() {
 		String comm;
-		comm="CREATE TABLE IF NOT EXISTS MEMBERS(FNAME VARCHAR(20) NOT NULL, LNAME VARCHAR(20), EMAIL VARCHAR(50) PRIMARY KEY, PASSWORD VARCHAR(50) NOT NULL, ROLE VARCHAR(10) NOT NULL);";
+		comm="CREATE TABLE IF NOT EXISTS TRUSTED_SIGNIN(EMAIL VARCHAR(50) PRIMARY KEY, SESSION_TOKEN VARCHAR(15) NOT NULL, IP_ADDRESS VARCHAR(20) NOT NULL );";
+		execution(comm);
+		comm="CREATE TABLE IF NOT EXISTS HISTORY(EMAIL VARCHAR(50), IP_ADDRESS VARCHAR(15) NOT NULL, HISTORY VARCHAR(25) NOT NULL );";
 		execution(comm);
 		
 	}
-	static boolean insertvalues(String a,String b,String c, String d,String e) {
-		String fname=a;
-		String lname=b;
-		String email=c;
-		String password =d;
-		String role =e;
-		String command ="INSERT INTO MEMBERS VALUES ('"+fname+"', '"+lname+"', '"+email+"', '"+password+"', '"+role+"');";
-		return execution(command);
-		
-	}
 	
-	public boolean getdata(List<String> a) {
-	    String fname = a.get(0);
-	    String lname = a.get(1);
-	    String email = a.get(2);
-	    String password = a.get(3);
-	    String role = a.get(4);
-	        create();
-	        boolean sol = insertvalues(fname, lname, email, password, role);
-	        return sol; // Return true if successful
-	}
-	
-	public boolean getUserByEmailAndPassword(String email, String password) {
-	    boolean truth =false;
+	public boolean check_trusted_ip(String a) {
+		String email=a;
+		boolean truth =false;
 	    String url = "jdbc:mysql://localhost:3306/Notessharing";
 	    String userDB = "root";
 	    String pwdDB = "hariambika";
 
 	    try (Connection connection = DriverManager.getConnection(url, userDB, pwdDB)) {
-	        String query = "SELECT * FROM MEMBERS WHERE EMAIL=? AND PASSWORD=?";
+	        String query = "SELECT * FROM TRUSTED_SIGNIN WHERE EMAIL=?";
 	        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
 	            preparedStatement.setString(1, email);
-	            preparedStatement.setString(2, password);
+	            
 
 	            try (ResultSet resultSet = preparedStatement.executeQuery()) {
 	                if (resultSet.next()) {
 	                    // Found a matching user, populate the user object
-	                    User user = new User();
-	                    user.setFirstName(resultSet.getString("FNAME"));
-	                    user.setLastName(resultSet.getString("LNAME"));
-	                    user.setEmail(resultSet.getString("EMAIL"));
-	                    user.setPassword(resultSet.getString("PASSWORD"));
-	                    user.setRole(resultSet.getString("ROLE"));
-	                    
+	                                        
 	                    truth=true;
 	                }
 	            }
@@ -123,6 +105,58 @@ public class DatabaseConfig{
 
 	    return truth; // Return null if no user found or an exception occurs
 	}
+		
+	
+	
+	static boolean set_trusted_ip(String a,String b,String c) {
+		String email=a;
+		String session_token =b;
+		String ip=c;
+		String command ="INSERT INTO TRUSTED_SIGNIN VALUES ('"+email+"', '"+session_token+"', '"+ip+"');";
+		return execution(command);
+		
+	}
+	
+	static boolean insert_history(String a,String b,String c) {
+		String email=a;
+		String ip=b;
+		String history=c;
+		String command ="INSERT INTO HISTORY VALUES ('"+email+"', '"+ip+"', '"+history+"');";
+		return execution(command);
+		
+	}
+	
+	public boolean set_trusted_ip_address(List<String> a) {
+		 String email = a.get(0);
+		 String session_token = a.get(1);
+		 String ip = a.get(2);
+		 boolean sol=set_trusted_ip(email,session_token,ip);
+		 return sol;
+		
+	}
+	
+	public boolean getdata(List<String> a) {
+	    String email = a.get(0);
+	 
+	    String ip = a.get(1);
+	    
+	        create();
+	        long currentTimestamp = System.currentTimeMillis();
+
+	        // Create a Date object using the timestamp
+	        Date currentDate = new Date(currentTimestamp);
+
+	        // Create a SimpleDateFormat object with the desired format
+	        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
+
+	        // Format the Date object to get the timestamp as a string
+	        String timestampString = dateFormat.format(currentDate);
+
+	        boolean sol =insert_history(email,ip,timestampString);
+	        return sol; // Return true if successful
+	}
+	
+	
 
 
 
@@ -132,6 +166,3 @@ public class DatabaseConfig{
 		System.out.println("hi");
 	}
 }
-
-
-
