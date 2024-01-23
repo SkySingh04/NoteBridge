@@ -1,8 +1,10 @@
 package com.notebridge.backend.controller; 
-  
+
+import com.notebridge.backend.modal.Trusted_user_ip;
 import java.util.ArrayList; 
-import java.util.HashSet; 
-  
+import java.util.HashSet;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired; 
 import org.springframework.web.bind.annotation.DeleteMapping; 
 import org.springframework.web.bind.annotation.GetMapping; 
@@ -56,34 +58,20 @@ public class APIController {
         }
     }
 
-    // Other methods...
 
+    @GetMapping("/info")
+    @CrossOrigin(origins = "http://localhost:3000")
+    public List<Trusted_user_ip> getIpAddressInfo() {
+        // Call the method in userService to retrieve all IP address information
+        List<Trusted_user_ip> ipAddressInfoList = userService.getAllIpAddressInfo();
+
+        // You can add additional logic or validation if needed
+
+        return ipAddressInfoList;
+    }
+    
+    
 }
 
 	
 	
-	
-//    @Autowired
-//    BookServiceImpl bookServiceImpl; 
-  
-//    @PostMapping("/") 
-//    public void addBook(@RequestBody Book book) { 
-//        bookServiceImpl.addBook(book); 
-//    } 
-//  
-//    @GetMapping("/findall") 
-//    public HashSet<Book> getAllBook() { 
-//        return bookServiceImpl.findAllBook(); 
-//    } 
-//  
-//    @GetMapping("/findbyid/{id}") 
-//    public Book geBookById(@PathVariable long id) { 
-//        return bookServiceImpl.findBookByID(id); 
-//    } 
-//  
-//    @DeleteMapping("/delete") 
-//    public void deleteBook() { 
-//        bookServiceImpl.deleteAllData(); 
-//    } 
-	
-  
