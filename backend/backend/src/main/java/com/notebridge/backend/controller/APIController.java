@@ -31,7 +31,7 @@ public class APIController {
     // Other mappings...
 
     @PostMapping("/signup")
-    @CrossOrigin(origins = "http://localhost:3000")
+    @CrossOrigin(origins = "http://localhost:3001")
     public ResponseEntity<String> signUp(@RequestBody User user) {
         // Implement logic to register a new user
         boolean isSignUpSuccessful = userService.signUp(user);
@@ -44,7 +44,7 @@ public class APIController {
     }
 
     @PostMapping("/signin")
-    @CrossOrigin(origins = "http://localhost:3000")
+    @CrossOrigin(origins = "http://localhost:3001")
     public ResponseEntity<String> signIn(@RequestBody User user) {
         // Implement logic to authenticate the user
         boolean isSignInSuccessful = userService.signIn(user);

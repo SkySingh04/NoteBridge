@@ -52,7 +52,7 @@ public class UserServiceImpl implements UserService {
     @Override
     
     
-    public void signUp(User user) {
+    public boolean signUp(User user) {
         // Implement logic to save the user to the database or in-memory list
 //        users.add(user); Uncomment this
         // userRepository.save(user); // If using a repository
@@ -72,6 +72,7 @@ public class UserServiceImpl implements UserService {
         	
         	DatabaseConfig obj= new DatabaseConfig();
         	obj.getdata(variableList);
+        return true;
         	
         }
     	
@@ -105,6 +106,7 @@ public class UserServiceImpl implements UserService {
 					variableList.add(get_ip());
 					databaseforsignin obj2 =new databaseforsignin();
 					obj2.getdata(variableList);
+					return true;
 				} catch (UnknownHostException e) {
 					// TODO Auto-generated catch block
 					
@@ -129,11 +131,13 @@ public class UserServiceImpl implements UserService {
 					databaseforsignin obj2 =new databaseforsignin();
 					obj2.set_trusted_ip_address(variableList);
 					obj2.getdata(variableList1);
+					return true;
 					
 				} catch (UnknownHostException e) {
 					// TODO Auto-generated catch block
 					System.out.println("Ip address couldnt be accessed!!");
 					e.printStackTrace();
+					return false;
 				}
             	
             	
@@ -145,10 +149,12 @@ public class UserServiceImpl implements UserService {
         }
         else {
         	System.out.println("Authentication failed!!!");
+        	return false;
         	
         }
-        return true;
-    	
+		return true;
+		
+        
     }
    
     @Override
