@@ -84,11 +84,11 @@ function SideChat({onChatClick}) {
       {contacts.map((contact, index) => (
         <SideChatBox
           key={index}
-          subject={contact[0]} // Assuming the first element in the list is the subject (email)
+          subject={contact[0]}
           lastmessage='' // You can customize this based on your requirements
           time='' // You can customize this based on your requirements
           onClick={() => {
-            setSelectedUser(contact[0]); // Assuming the first element in the list is the subject (email)
+            setSelectedUser(contact[0]);
             handleChatClick(contact);
             if (onChatClick) {
               onChatClick(contact[0]);
