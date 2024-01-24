@@ -35,7 +35,7 @@ public class APIController {
     // Other mappings...
 
     @PostMapping("/signup")
-    @CrossOrigin(origins = "http://localhost:3002")
+    @CrossOrigin(origins = "http://localhost:3000")
     public ResponseEntity<String> signUp(@RequestBody User user) {
         // Implement logic to register a new user
         boolean isSignUpSuccessful = userService.signUp(user);
@@ -48,7 +48,7 @@ public class APIController {
     }
 
     @PostMapping("/signin")
-    @CrossOrigin(origins = "http://localhost:3002")
+    @CrossOrigin(origins = "http://localhost:3000")
     public ResponseEntity<String> signIn(@RequestBody User user) {
         // Implement logic to authenticate the user
         boolean isSignInSuccessful = userService.signIn(user);
@@ -62,7 +62,7 @@ public class APIController {
 
 
     @GetMapping("/info")
-    @CrossOrigin(origins = "http://localhost:3002")
+    @CrossOrigin(origins = "http://localhost:3000")
     public List<List<String>> getIpAddressInfo() {
         // Call the method in userService to retrieve all IP address information
         List<List<String>> ipAddressInfoList = userService.getAllIpAddressInfo();
@@ -74,7 +74,7 @@ public class APIController {
     }
     
     @PostMapping("/get_contacts")
-    @CrossOrigin(origins = "http://localhost:3002")
+    @CrossOrigin(origins = "http://localhost:3000")
     public ResponseEntity<List<List<String>>> getContacts(@RequestBody User user) {
         try {
             List<List<String>> contacts = userService.get_contacts(user);
