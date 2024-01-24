@@ -37,6 +37,7 @@ function ChatRoom() {
       if (response.ok) {
         const messages = await response.json();
         console.log('API call response:', messages);
+        setMessages(messages);
         // Handle the fetched messages as needed
       } else {
         console.error('Failed to fetch messages');

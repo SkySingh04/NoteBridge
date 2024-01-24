@@ -1,6 +1,12 @@
 import React from 'react'
 
 function Chatbox({name,message,time,user}) {
+  console.log('Chatbox mein');
+  console.log('name:', name);
+  console.log('message:', message);
+  console.log('time:', time);
+  console.log('user:', user);
+  
   return (
     <div className={`w-full flex items-center ${user? 'justify-end':''} `}>
         <div className={`bg-white w-fit m-2 rounded-md p-2`}>

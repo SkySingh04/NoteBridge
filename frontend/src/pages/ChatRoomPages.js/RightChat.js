@@ -6,6 +6,7 @@ import ChatFooter from './ChatFooter';
 import ChatRightMessage from './ChatRightMessage';
 
 function RightChat({messages}) {
+  console.log('Right chat mein');
   console.log('messages:', messages);
   return (
     <div className='border-2 border-richblack-900 flex flex-col'>
