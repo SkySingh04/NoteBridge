@@ -57,7 +57,7 @@ function SideChat({onChatClick}) {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(dummyUser),
+        body: {dummyUser , selectedContact},
       });
 
       if (response.ok) {

@@ -87,10 +87,10 @@ public class APIController {
     
     @PostMapping("/get_messages")
     @CrossOrigin(origins = "http://localhost:3000")
-    public ResponseEntity<List<List<String>>> getMessages(@RequestBody User user) {
-    	System.out.println("User is" + user);
+    public ResponseEntity<List<List<String>>> getMessages(@RequestBody User user , String receiver) {
     	System.out.println("User email is" + user.getEmail());
-    	
+    	System.out.println("Receiver ID is" + receiver);
+
 //        // Validate user object (add more validation as needed)
 //        if (user == null || user.getEmail() == null || user.getEmail().isEmpty()) {
 //            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
@@ -98,7 +98,7 @@ public class APIController {
 
         try {
             // Call the method in userService to retrieve messages
-            List<List<String>> messages = userService.getmessages_user(user, user.getEmail());
+            List<List<String>> messages = userService.getmessages_user(user, receiver);
 
             // Return the messages in the response
             return ResponseEntity.ok(messages);
