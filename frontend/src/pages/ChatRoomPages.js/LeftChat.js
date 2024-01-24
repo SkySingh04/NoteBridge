@@ -1,12 +1,23 @@
-import React from 'react';
-import { FaSearch } from "react-icons/fa";
-import { MdFilterList } from "react-icons/md";
-import { MdMessage } from "react-icons/md";
-import { SlOptionsVertical } from "react-icons/sl";
-import { MdDonutLarge } from "react-icons/md";
+import React, { useState } from 'react';
+import { FaSearch } from 'react-icons/fa';
+import { MdFilterList } from 'react-icons/md';
+import { MdMessage } from 'react-icons/md';
+import { SlOptionsVertical } from 'react-icons/sl';
+import { MdDonutLarge } from 'react-icons/md';
 import SideChat from './SideChat';
 
-function LeftChat() {
+function LeftChat({ onChatClick }) {
+  // Maintain state for the selected user
+  const [selectedUser, setSelectedUser] = useState(null);
+
+  // Handle the click on a chat
+  const handleChatClick = (user) => {
+    setSelectedUser(user);
+    // Call the callback function passed as prop to notify the parent component
+    if (onChatClick) {
+      onChatClick(user);
+    }
+  };
   return (
     <div className='flex flex-col'>
         <div className='h-20 flex justify-between items-center'>
@@ -25,7 +36,7 @@ function LeftChat() {
             <div className='m-2 text-4xl'><MdFilterList /></div>
         </div>
         <div className='h-[70vh]'>
-          <SideChat />
+          <SideChat  onChatClick={handleChatClick}/>
         </div>
     </div>
   )

@@ -85,6 +85,26 @@ public class APIController {
         }
     }
     
+    @PostMapping("/get_messages")
+    @CrossOrigin(origins = "http://localhost:3002")
+    public ResponseEntity<List<List<String>>> getMessages(@RequestBody User user) {
+        // Validate user object (add more validation as needed)
+        if (user == null || user.getEmail() == null || user.getEmail().isEmpty()) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+        }
+
+        try {
+            // Call the method in userService to retrieve messages
+            List<List<String>> messages = userService.getmessages_user(user, user.getEmail());
+
+            // Return the messages in the response
+            return ResponseEntity.ok(messages);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+        }
+    }
+    
 }
 
 	
