@@ -1,6 +1,8 @@
 package com.notebridge.backend.controller; 
 
 import com.notebridge.backend.modal.Trusted_user_ip;
+
+import java.sql.SQLException;
 import java.util.ArrayList; 
 import java.util.HashSet;
 import java.util.List;
@@ -65,12 +67,23 @@ public class APIController {
         // Call the method in userService to retrieve all IP address information
         List<List<String>> ipAddressInfoList = userService.getAllIpAddressInfo();
         
-
+        
        
 
         return ipAddressInfoList;
     }
     
+    @PostMapping("/get_contacts")
+    @CrossOrigin(origins = "http://localhost:3002")
+    public ResponseEntity<List<List<String>>> getContacts(@RequestBody User user) {
+        try {
+            List<List<String>> contacts = userService.get_contacts(user);
+            return ResponseEntity.ok(contacts);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+        }
+    }
     
 }
 
