@@ -11,6 +11,10 @@ function SideChat() {
 
   const fetchContacts = async () => {
     try {
+
+      //ye h dummy user, isko changa krna hoga as you want, auth lagana chahiye but maa chudaye
+
+
       const dummyUser = {
         firstName: 'John',
         lastName: 'Doe',
@@ -29,9 +33,11 @@ function SideChat() {
 
       if (response.ok) {
         const data = await response.json();
+        console.log('data:', data);
         setContacts(data);
       } else {
         console.error('Failed to fetch contacts');
+        console.error(response);
       }
     } catch (error) {
       console.error('Error during fetchContacts:', error);
