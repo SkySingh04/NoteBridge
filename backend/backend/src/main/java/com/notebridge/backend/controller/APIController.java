@@ -106,36 +106,7 @@ public class APIController {
             List<List<String>> messages = userService.getmessages_user(user, receiverId);
 
             // Return the messages in the response
-//            return ResponseEntity.ok(messages);
-            return ResponseEntity.ok([
-    [
-        "1",
-        "hi hello maa chudao",
-        "john_doe",
-        "john_doe123123",
-        "2024-01-23 06:11:27.857",
-        "",
-        "192.168.0.103"
-    ],
-    [
-        "2",
-        "hi hello maa chudao",
-        "john_doe",
-        "john_doe123123",
-        "2024-01-23 06:11:40.866",
-        "",
-        "192.168.0.103"
-    ],
-    [
-        "3",
-        "hi hello maa chudao",
-        "john_doe",
-        "john_doe123123",
-        "2024-01-23 06:13:42.903",
-        "",
-        "192.168.0.103"
-    ]
-])
+            return ResponseEntity.ok(messages);
         } catch (SQLException e) {
             e.printStackTrace();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
