@@ -9,24 +9,35 @@ function ChatRoom() {
   // Handle the click on a chat in the LeftChat component
   const handleChatClick = async (selectedUser) => {
     try {
-      // Fetch messages for the selected user and receiver
+      // Dummy user (replace with your authentication logic)
+      const dummyUser = {
+        firstName: 'Akash',
+        lastName: 'Singh',
+        email: 'john_doe',
+        password: '12312',
+        role: 'student',
+      };
+  
+      // Include the receiverId in the JSON body
+      const requestBody = {
+        user: dummyUser,
+        receiverId: selectedUser[0],
+      };
+
+      console.log('requestBody:', requestBody);
+  
       const response = await fetch('http://localhost:8080/get_messages', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({
-          user: selectedUser, // The logged-in user (replace with actual user data)
-          receiver: selectedUser, // Assuming the selected user is also the receiver
-        }),
+        body: JSON.stringify(requestBody),
       });
-
+  
       if (response.ok) {
-        const messagesData = await response.json();
-        console.log('messages:', messagesData);
-
-        // Update the messages state with the fetched messages
-        setMessages(messagesData);
+        const messages = await response.json();
+        console.log('API call response:', messages);
+        // Handle the fetched messages as needed
       } else {
         console.error('Failed to fetch messages');
         console.error(response);
