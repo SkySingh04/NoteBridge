@@ -94,7 +94,7 @@ function SideChat({onChatClick}) {
             setSelectedUser(contact[0]);
             handleChatClick(contact);
             if (onChatClick) {
-              onChatClick(contact[0]);
+              onChatClick(contact);
             }
           }}
         />
