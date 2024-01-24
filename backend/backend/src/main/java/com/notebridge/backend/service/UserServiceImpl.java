@@ -170,15 +170,16 @@ public class UserServiceImpl implements UserService {
 		
         
     }
+    
    
     @Override
-    public void messages(User user) {
+    public boolean send_message(User user,String a,String b,String c) {
         String userprof = user.getEmail();
-        String recieverid ="";
-        String message ="";
-        String link = ""; // Initialize link with an empty string or the appropriate default value
+        String recieverid= a;
+        String message =b;
+        String link = c; // Initialize link with an empty string or the appropriate default value
         long currentTimestamp = System.currentTimeMillis();
-
+       
         // Create a Date object using the timestamp
         Date currentDate = new Date(currentTimestamp);
 
@@ -190,15 +191,38 @@ public class UserServiceImpl implements UserService {
         System.out.println(timestampString);
         database_messages obj3 = new database_messages();
         obj3.create();
-        obj3.getmessages_by_user_id(userprof);
+        //List<List<String>> contacts=obj3.get_contacts(userprof);
+        //return contacts;}
         try {
             obj3.insertvalues(userprof, recieverid, timestampString, message, link, get_ip());
             System.out.println("Message sent successfully!!");
+            return true;
         } catch (UnknownHostException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
+            return false;
         }
     }
+    
+    public List<List<String>> get_contacts(User user) throws SQLException{
+    	database_messages obj3 = new database_messages();
+    	obj3.create();
+    	List<List<String>> finall=obj3.get_contacts(user.getEmail());
+    	return finall;
+    }
+    
+    public List<List<String>> getmessages_user(User user,String a) throws SQLException{
+    	database_messages obj3 = new database_messages();
+    	String receiver=a;
+    	obj3.create();
+    	List<List<String>> finall=obj3.getmessages_by_user_id(user.getEmail(),receiver);
+    	return finall;
+    	
+    }
+    
+    
+    
+        //ye insert message me ek aur function bnana h!!!!!!!!!!!!!!!!!!!!
     
     public List<List<String>> getAllIpAddressInfo() {
         // Implement logic to retrieve all IP address information from the database

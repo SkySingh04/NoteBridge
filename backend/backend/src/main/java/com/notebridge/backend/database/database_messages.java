@@ -10,7 +10,9 @@ package com.notebridge.backend.database;
 	import java.sql.SQLException;
 	import java.sql.Statement;
 	import java.util.HashMap;
-	import java.util.Map;
+import java.util.HashSet;
+import java.util.Map;
+	import java.util.Set;
 
 //	import com.notebridge.backend.modal.User;
 
@@ -94,53 +96,144 @@ package com.notebridge.backend.database;
 		        return sol; // Return true if successful
 		}
 		
-		public void getmessages_by_user_id(String userprof) {
-            Map<Integer, StringBuilder> conversations = new HashMap<>();
+		public static String get_name(String a) throws SQLException {
+			String email=a;
+			String url = "jdbc:mysql://localhost:3306/Notessharing";
+		    String userDB = "root";
+		    String pwdDB = "hariambika";
+		    List<List<String>> output;
+		    try (Connection connection = DriverManager.getConnection(url, userDB, pwdDB)) {
+		        String query = "SELECT CONCAT(FNAME,' ',LNAME) FROM MEMBERS WHERE EMAIL =?";
+		        String value1="";
+		        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+		            preparedStatement.setString(1, email);
+		            
+		                  try( ResultSet resultSet = preparedStatement.executeQuery()) {
+
+		                   // Check if there is a result
+		                   if (resultSet.next()) {
+		                       // Get the value from the result set
+		                       String value = resultSet.getString("concat(fname,' ',lname)"); // Replace "your_column" with your actual column name
+
+				                  value1=value;
+		                   }
+
+		               } catch (SQLException e) {
+		                   e.printStackTrace();
+		               }
+		                 
+		            return value1;
+		            
+
+			
+		}}}
+		
+		public static List<List<String>>  getmessages_by_user_id(String userprof,String receiver) throws SQLException {
+//            Map<Integer, StringBuilder> conversations = new HashMap<>();
+			List<List<String>> finallist = new ArrayList<>();
 			boolean truth =false;
 		    String url = "jdbc:mysql://localhost:3306/Notessharing";
 		    String userDB = "root";
 		    String pwdDB = "hariambika";
 
 		    try (Connection connection = DriverManager.getConnection(url, userDB, pwdDB)) {
-		        String query = "SELECT * FROM MESSAGES WHERE SENDER =? OR  RECEIVER=?";
+		        String query = "SELECT * FROM MESSAGES WHERE (SENDER =? AND RECEIVER=?) OR  (SENDER=? AND RECEIVER=?) ORDER BY TIME";
 		        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
 		            preparedStatement.setString(1, userprof);
-		            preparedStatement.setString(2, userprof);
+		            preparedStatement.setString(2, receiver);
+		            preparedStatement.setString(3, receiver);
+		            preparedStatement.setString(4, userprof);
+		            
+		            
 
 		            try (ResultSet resultSet = preparedStatement.executeQuery()) {
 	                    while (resultSet.next()) {
+	                    	
+	                    	List<String> datalist=new ArrayList<>();
 	                        String messageId = resultSet.getString("MESSAGE_ID");
 	                        String senderId = resultSet.getString("SENDER");
 	                        String receiverId = resultSet.getString("RECEIVER");
 	                        String messageText = resultSet.getString("message");
+	                        String link=resultSet.getString("LINK");
+	                        String time=resultSet.getString("TIME");
+	                        String ip=resultSet.getString("SENDER_IP");
+	                        datalist.add(messageId);
+	                        datalist.add(messageText);
+	                        datalist.add(senderId);
+	                        datalist.add(receiverId);
+	                        datalist.add(time);
+	                        datalist.add(link);
+	                        datalist.add(ip);
+	                        finallist.add(datalist);
+	                        
+	                        
 
 	                        // Determine the conversation key based on sender and receiver
-	                        int conversationKey = (senderId.compareTo(receiverId) < 0)
-	                                ? (senderId.hashCode() << 16 | receiverId.hashCode())
-	                                : (receiverId.hashCode() << 16 | senderId.hashCode());
-
-	                        // Append the message to the conversation
-	                        conversations.computeIfAbsent(conversationKey, k -> new StringBuilder())
-	                                .append(messageText)
-	                                .append("\n");
+	                       
 	                    }
 	                }
 	            }
-
+		        
 	            // Print the conversations
-	            for (Map.Entry<Integer, StringBuilder> entry : conversations.entrySet()) {
-	                int conversationKey = entry.getKey();
-	                StringBuilder conversation = entry.getValue();
-
-	                System.out.println("Conversation between users " +
-	                        (conversationKey & 0xFFFF) + " and " +
-	                        ((conversationKey >> 16) & 0xFFFF) + ":");
-	                System.out.println(conversation.toString());
-	            }
-
-	        } catch (SQLException e) {
-	            e.printStackTrace();
-	        }
 		
 		}
+	
+		return finallist;}
+	public static List<List<String>> get_contacts(String userprof) throws SQLException {
+		String url = "jdbc:mysql://localhost:3306/Notessharing";
+	    String userDB = "root";
+	    String pwdDB = "hariambika";
+	    
+	    List<List<String>> finallist = new ArrayList<>();
+	    List<String> datalist=new ArrayList<>();
+		Set<String> stringSet = new HashSet<>();
+		
+	    try (Connection connection = DriverManager.getConnection(url, userDB, pwdDB)) {
+	        String query = "SELECT * FROM MESSAGES WHERE SENDER =? OR  RECEIVER=?";
+	        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+	            preparedStatement.setString(1, userprof);
+	            preparedStatement.setString(2, userprof);
+
+	            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                    while (resultSet.next()) {
+                    	
+                     
+                        String senderId = resultSet.getString("SENDER");
+                        String receiverId = resultSet.getString("RECEIVER");
+                        datalist.add(receiverId);
+                        datalist.add(senderId);
+                    }
+                        
+                        Set<String> stringSet1 = new HashSet<>(datalist);
+                        stringSet1.remove(userprof);
+                       
+                        
+                        //return stringSet1;
+                        for (String element : stringSet1) {
+                        	List<String> datalist1=new ArrayList<>();
+                            datalist1.add(element);
+                            datalist1.add(get_name(element));
+                            
+                            finallist.add(datalist1);
+                        }
+                        return finallist;
+                        // Determine the conversation key based on sender and receiver
+                       
+                    
+                }
+            }
+	        
+            // Print the conversations
+	
+	}
+	    
+	    
+	
+	
+	}
+		
+	public static void main(String args[]) throws SQLException {
+		System.out.println(getmessages_by_user_id("john_doe","adsfaqwerqewt123"));
+		
+	}
 	}
