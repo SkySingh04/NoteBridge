@@ -211,11 +211,11 @@ public class UserServiceImpl implements UserService {
     	return finall;
     }
     
-    public List<List<String>> getmessages_user(User user,String a) throws SQLException{
+    public List<List<String>> getmessages_user(String email,String a) throws SQLException{
     	database_messages obj3 = new database_messages();
     	String receiver=a;
     	obj3.create();
-    	List<List<String>> finall=obj3.getmessages_by_user_id(user.getEmail(),receiver);
+    	List<List<String>> finall=obj3.getmessages_by_user_id(email,receiver);
     	return finall;
     	
     }

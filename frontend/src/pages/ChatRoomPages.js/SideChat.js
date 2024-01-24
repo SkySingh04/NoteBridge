@@ -4,7 +4,13 @@ import SideChatBox from './SideChatBox';
 function SideChat({onChatClick}) {
   const [contacts, setContacts] = useState([]);
   const [selectedUser, setSelectedUser] = useState(null);
-
+  const dummyUser = {
+    firstName: 'Akash',
+    lastName: 'Singh',
+    email: 'john_doe',
+    password: '12312',
+    role: 'student',
+  };
   useEffect(() => {
     // Fetch contacts when the component mounts
     fetchContacts();
@@ -13,13 +19,7 @@ function SideChat({onChatClick}) {
   const fetchContacts = async () => {
     try {
       // Dummy user (replace with your authentication logic)
-      const dummyUser = {
-        firstName: 'Akash',
-        lastName: 'Singh',
-        email: 'john_doe',
-        password: '12312',
-        role: 'student',
-      };
+      
 
       const response = await fetch('http://localhost:8080/get_contacts', {
         method: 'POST',
@@ -48,7 +48,7 @@ function SideChat({onChatClick}) {
       console.log("This is the selected contact")
       console.log(selectedContact)
       console.log("And this is what we are sending")
-      console.log(JSON.stringify({"user": "john_doe", "receiver": selectedContact[0]}))
+      console.log(JSON.stringify({"email": "john_doe", "receiver": selectedContact[0]}))
       
 
       // Fetch messages for the selected user and receiver
@@ -58,7 +58,7 @@ function SideChat({onChatClick}) {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          user: "john_doe", // The logged-in user (replace with actual user data)
+          email: "john_doe", // The logged-in user (replace with actual user data)
           receiver: selectedContact[0], // Assuming the first element in the list is the subject (email)
         }),
       });
