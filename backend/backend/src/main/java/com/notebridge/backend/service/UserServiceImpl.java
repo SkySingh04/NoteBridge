@@ -222,7 +222,6 @@ public class UserServiceImpl implements UserService {
     
     
     
-        //ye insert message me ek aur function bnana h!!!!!!!!!!!!!!!!!!!!
     
     public List<List<String>> getAllIpAddressInfo() {
         // Implement logic to retrieve all IP address information from the database

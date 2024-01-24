@@ -112,6 +112,29 @@ public class APIController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
         }
     }
+    @PostMapping("/send_message")
+    @CrossOrigin(origins = "http://localhost:3000")
+    public ResponseEntity<String> sendMessage(@RequestBody Map<String, String> requestBody) {
+        try {
+            // Extract necessary information from the request body
+            User user = objectMapper.convertValue(requestBody.get("user"), User.class);
+            String receiverId = requestBody.get("receiverId");
+            String message = requestBody.get("message");
+            String link = requestBody.get("link");
+
+            // Call the method in userService to send the message
+            boolean isMessageSent = userService.send_message(user, receiverId, message, link);
+
+            if (isMessageSent) {
+                return ResponseEntity.ok("Message sent successfully");
+            } else {
+                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to send message");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid request body");
+        }
+    }
     
 }
 
