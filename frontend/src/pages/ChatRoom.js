@@ -9,6 +9,8 @@ function ChatRoom() {
 
   // Handle the click on a chat in the LeftChat component
   const handleChatClick = async (selectedUser) => {
+    console.log('Chat room mein');
+    console.log('selectedUser:', selectedUser);
     try {
       // Dummy user (replace with your authentication logic)
       const dummyUser = {
