@@ -44,6 +44,13 @@ function SideChat({onChatClick}) {
 
   const handleChatClick = async (selectedContact) => {
     try {
+      console.log("Dekh abhyudhay click hua")
+      console.log("This is the selected contact")
+      console.log(selectedContact)
+      console.log("And this is what we are sending")
+      console.log(JSON.stringify({"user": selectedUser, "receiver": selectedContact[0]}))
+      
+
       // Fetch messages for the selected user and receiver
       const response = await fetch('http://localhost:8080/get_messages', {
         method: 'POST',
@@ -58,6 +65,8 @@ function SideChat({onChatClick}) {
 
       if (response.ok) {
         const messages = await response.json();
+        console.log("API call se ye wala aaya")
+        console.log("If this is empty then API is not sending data properly back");
         console.log('messages:', messages);
 
         // Handle the fetched messages as needed (update state, display in UI, etc.)
