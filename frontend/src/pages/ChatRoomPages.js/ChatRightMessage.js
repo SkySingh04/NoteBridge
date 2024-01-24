@@ -1,3 +1,4 @@
+// ChatRightMessage.js
 import React from 'react';
 import Chatbox from './Chatbox';
 
@@ -12,7 +13,7 @@ function ChatRightMessage({ messages }) {
           name={message[2]} // Assuming the third element in the list is the senderId
           message={message[1]} // Assuming the second element in the list is the messageText
           time={message[4]} // Assuming the fifth element in the list is the time
-          user={true}
+          user={message[2] === 'john_doe'} // Check if the message is from the current user
         />
       ))}
     </div>
