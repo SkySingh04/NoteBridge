@@ -24,7 +24,7 @@ function ChatRoom() {
       // Include the receiverId in the JSON body
       const requestBody = {
         user: dummyUser,
-        receiverId: selectedUser[0],
+        receiverId: selectedUser,
       };
   
       const response = await fetch('http://localhost:8080/get_messages', {
