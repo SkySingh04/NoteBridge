@@ -5,7 +5,8 @@ import { ImAttachment } from "react-icons/im";
 import ChatFooter from './ChatFooter';
 import ChatRightMessage from './ChatRightMessage';
 
-function RightChat() {
+function RightChat({messages}) {
+  console.log('messages:', messages);
   return (
     <div className='border-2 border-richblack-900 flex flex-col'>
         <div className='h-20 flex justify-between items-center '>
@@ -17,11 +18,12 @@ function RightChat() {
             </div>
         </div>
         <div className='flex-1 bg-richblack-900'>
-            <ChatRightMessage />
-        </div>
-        <div className='bg-pure-greys-25 p-2'>
-          <ChatFooter />
-        </div>
+        {/* Pass the messages state to ChatRightMessage */}
+        <ChatRightMessage messages={messages} />
+      </div>
+      <div className='bg-pure-greys-25 p-2'>
+        <ChatFooter />
+      </div>
     </div>
   )
 }

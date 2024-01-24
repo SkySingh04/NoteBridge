@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import SideChatBox from './SideChatBox';
 
-function SideChat() {
+function SideChat({onChatClick}) {
   const [contacts, setContacts] = useState([]);
+  const [selectedUser, setSelectedUser] = useState(null);
 
   useEffect(() => {
     // Fetch contacts when the component mounts
@@ -11,16 +12,13 @@ function SideChat() {
 
   const fetchContacts = async () => {
     try {
-
-      //ye h dummy user, isko changa krna hoga as you want, auth lagana chahiye but maa chudaye
-
-
+      // Dummy user (replace with your authentication logic)
       const dummyUser = {
-        firstName: 'John',
-        lastName: 'Doe',
-        email: 'john.doe@example.com',
-        password: 'password123',
-        role: 'user',
+        firstName: 'Akash',
+        lastName: 'Singh',
+        email: 'john_doe',
+        password: '12312',
+        role: 'student',
       };
 
       const response = await fetch('http://localhost:8080/get_contacts', {
@@ -44,6 +42,34 @@ function SideChat() {
     }
   };
 
+  const handleChatClick = async (selectedContact) => {
+    try {
+      // Fetch messages for the selected user and receiver
+      const response = await fetch('http://localhost:8080/get_messages', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          user: selectedUser, // The logged-in user (replace with actual user data)
+          receiver: selectedContact[0], // Assuming the first element in the list is the subject (email)
+        }),
+      });
+
+      if (response.ok) {
+        const messages = await response.json();
+        console.log('messages:', messages);
+
+        // Handle the fetched messages as needed (update state, display in UI, etc.)
+      } else {
+        console.error('Failed to fetch messages');
+        console.error(response);
+      }
+    } catch (error) {
+      console.error('Error during fetchMessages:', error);
+    }
+  };
+
   return (
     <div className='flex flex-col h-full overflow-y-scroll'>
       {contacts.map((contact, index) => (
@@ -52,6 +78,13 @@ function SideChat() {
           subject={contact[0]} // Assuming the first element in the list is the subject (email)
           lastmessage='' // You can customize this based on your requirements
           time='' // You can customize this based on your requirements
+          onClick={() => {
+            setSelectedUser(contact[0]); // Assuming the first element in the list is the subject (email)
+            handleChatClick(contact);
+            if (onChatClick) {
+              onChatClick(contact[0]);
+            }
+          }}
         />
       ))}
     </div>
