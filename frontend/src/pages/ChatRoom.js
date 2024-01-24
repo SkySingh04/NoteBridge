@@ -1,3 +1,4 @@
+// ChatRoom.js
 import React, { useState } from 'react';
 import LeftChat from './ChatRoomPages.js/LeftChat';
 import RightChat from './ChatRoomPages.js/RightChat';
@@ -23,8 +24,6 @@ function ChatRoom() {
         user: dummyUser,
         receiverId: selectedUser[0],
       };
-
-      console.log('requestBody:', requestBody);
   
       const response = await fetch('http://localhost:8080/get_messages', {
         method: 'POST',
@@ -37,7 +36,10 @@ function ChatRoom() {
       if (response.ok) {
         const messages = await response.json();
         console.log('API call response:', messages);
+
+        // Set the messages in the state
         setMessages(messages);
+
         // Handle the fetched messages as needed
       } else {
         console.error('Failed to fetch messages');
