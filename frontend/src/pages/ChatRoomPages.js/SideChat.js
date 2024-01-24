@@ -48,7 +48,7 @@ function SideChat({onChatClick}) {
       console.log("This is the selected contact")
       console.log(selectedContact)
       console.log("And this is what we are sending")
-      console.log(JSON.stringify({"user": selectedUser, "receiver": selectedContact[0]}))
+      console.log(JSON.stringify({"user": "john_doe", "receiver": selectedContact[0]}))
       
 
       // Fetch messages for the selected user and receiver
@@ -58,7 +58,7 @@ function SideChat({onChatClick}) {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          user: selectedUser, // The logged-in user (replace with actual user data)
+          user: "john_doe", // The logged-in user (replace with actual user data)
           receiver: selectedContact[0], // Assuming the first element in the list is the subject (email)
         }),
       });

@@ -86,7 +86,7 @@ public class APIController {
     }
     
     @PostMapping("/get_messages")
-    @CrossOrigin(origins = "http://localhost:3002")
+    @CrossOrigin(origins = "http://localhost:3000")
     public ResponseEntity<List<List<String>>> getMessages(@RequestBody User user) {
         // Validate user object (add more validation as needed)
         if (user == null || user.getEmail() == null || user.getEmail().isEmpty()) {
