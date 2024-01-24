@@ -99,9 +99,6 @@ public class APIController {
             // Extract user and receiverId from the request body
             User user = objectMapper.convertValue(requestBody.get("user"), User.class);
             String receiverId = (String) requestBody.get("receiverId");
-            System.out.println("USer is " + user);
-            System.out.print("Receiver id is " + receiverId);
-
             // Call the method in userService to retrieve messages
             List<List<String>> messages = userService.getmessages_user(user, receiverId);
 
@@ -114,13 +111,13 @@ public class APIController {
     }
     @PostMapping("/send_message")
     @CrossOrigin(origins = "http://localhost:3000")
-    public ResponseEntity<String> sendMessage(@RequestBody Map<String, String> requestBody) {
+    public ResponseEntity<String> sendMessage(@RequestBody Map<String, Object> requestBody) {
         try {
             // Extract necessary information from the request body
             User user = objectMapper.convertValue(requestBody.get("user"), User.class);
-            String receiverId = requestBody.get("receiverId");
-            String message = requestBody.get("message");
-            String link = requestBody.get("link");
+            String receiverId = (String) requestBody.get("receiverId");
+            String message = (String) requestBody.get("message");
+            String link = (String) requestBody.get("link");
 
             // Call the method in userService to send the message
             boolean isMessageSent = userService.send_message(user, receiverId, message, link);
@@ -135,8 +132,8 @@ public class APIController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid request body");
         }
     }
+    }
     
-}
 
 	
 	

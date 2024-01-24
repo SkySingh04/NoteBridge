@@ -35,8 +35,9 @@ function ChatFooter({ receiverId, onMessageSent }) {
       });
 
       if (response.ok) {
-        const result = await response.json();
+        const result = response;
         console.log('Message sent successfully:', result);
+        window.location.reload()
 
         // Notify the parent component that the message has been sent
         if (onMessageSent) {
