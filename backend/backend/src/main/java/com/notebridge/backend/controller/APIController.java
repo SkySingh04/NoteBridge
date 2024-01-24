@@ -1,11 +1,14 @@
 package com.notebridge.backend.controller; 
 
 import com.notebridge.backend.modal.Trusted_user_ip;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 
 import java.sql.SQLException;
 import java.util.ArrayList; 
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired; 
 import org.springframework.web.bind.annotation.DeleteMapping; 
@@ -31,6 +34,10 @@ public class APIController {
 
     @Autowired
     private UserService userService;
+    
+    @Autowired
+    private ObjectMapper objectMapper;
+
 
     // Other mappings...
 
@@ -87,18 +94,16 @@ public class APIController {
     
     @PostMapping("/get_messages")
     @CrossOrigin(origins = "http://localhost:3000")
-    public ResponseEntity<List<List<String>>> getMessages(@RequestBody User user , String receiver) {
-    	System.out.println("User email is" + user.getEmail());
-    	System.out.println("Receiver ID is" + receiver);
-
-//        // Validate user object (add more validation as needed)
-//        if (user == null || user.getEmail() == null || user.getEmail().isEmpty()) {
-//            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
-//        }
-
+    public ResponseEntity<List<List<String>>> getMessages(@RequestBody Map<String, Object> requestBody) {
         try {
+            // Extract user and receiverId from the request body
+            User user = objectMapper.convertValue(requestBody.get("user"), User.class);
+            String receiverId = (String) requestBody.get("receiverId");
+            System.out.println("USer is " + user);
+            System.out.print("Receiver id is " + receiverId);
+
             // Call the method in userService to retrieve messages
-            List<List<String>> messages = userService.getmessages_user(user, receiver);
+            List<List<String>> messages = userService.getmessages_user(user, receiverId);
 
             // Return the messages in the response
             return ResponseEntity.ok(messages);

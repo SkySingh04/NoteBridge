@@ -44,29 +44,33 @@ function SideChat({onChatClick}) {
 
   const handleChatClick = async (selectedContact) => {
     try {
-      console.log("Dekh abhyudhay click hua")
-      console.log("This is the selected contact")
-      console.log(selectedContact)
-      console.log("And this is what we are sending")
-      console.log(dummyUser)
-      
-
-      // Fetch messages for the selected user and receiver
+      // Dummy user (replace with your authentication logic)
+      const dummyUser = {
+        firstName: 'Akash',
+        lastName: 'Singh',
+        email: 'john_doe',
+        password: '12312',
+        role: 'student',
+      };
+  
+      // Include the receiverId in the JSON body
+      const requestBody = {
+        user: dummyUser,
+        receiverId: selectedContact[0],
+      };
+  
       const response = await fetch('http://localhost:8080/get_messages', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: {dummyUser , selectedContact},
+        body: JSON.stringify(requestBody),
       });
-
+  
       if (response.ok) {
         const messages = await response.json();
-        console.log("API call se ye wala aaya")
-        console.log("If this is empty then API is not sending data properly back");
-        console.log('messages:', messages);
-
-        // Handle the fetched messages as needed (update state, display in UI, etc.)
+        console.log('API call response:', messages);
+        // Handle the fetched messages as needed
       } else {
         console.error('Failed to fetch messages');
         console.error(response);
@@ -75,6 +79,8 @@ function SideChat({onChatClick}) {
       console.error('Error during fetchMessages:', error);
     }
   };
+  
+  
 
   return (
     <div className='flex flex-col h-full overflow-y-scroll'>
