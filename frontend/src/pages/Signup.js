@@ -159,7 +159,7 @@ function Signup() {
                   name="firstName"
                   value={signupForm.firstName}
                   className="bg-richblack-700 rounded-md p-1"
-                  placeholder="Enter Password"
+                  placeholder="Enter First Name"
                   type="text"
                 />
               </div>

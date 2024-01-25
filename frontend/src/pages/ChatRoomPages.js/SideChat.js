@@ -87,7 +87,7 @@ function SideChat({onChatClick}) {
       {contacts.map((contact, index) => (
         <SideChatBox
           key={index}
-          subject={contact[0]}
+          subject={contact[1]}
           lastmessage='' // You can customize this based on your requirements
           time='' // You can customize this based on your requirements
           onClick={() => {
